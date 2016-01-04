@@ -43,7 +43,7 @@ function gmp_field_info() {
         'gmp_frameborder' => 0,
         'gmp_width'       => '100%',
         'gmp_height'      => '450px',
-        'gmp_zoom'        => '14'
+        'gmp_zoom'        => 14
       ),
       'instance_settings' => array(),
     )
@@ -184,7 +184,7 @@ function gmp_field_widget_form(&$form, &$form_state, $field, $instance, $langcod
     '#maxlength' => 128,
     '#required' => FALSE,
     '#description' => t('The location defines the place to highlight on the map. It accepts a location as either a place name, address, or place ID.'),
-    '#default_value' => variable_get('gmp_location')
+    '#default_value' => isset($items[$delta]['gmp_location']) ? $items[$delta]['gmp_location'] : variable_get('gmp_location')
   );
   $widget['gmp_width'] = array(
     '#type' => 'textfield',
@@ -193,7 +193,7 @@ function gmp_field_widget_form(&$form, &$form_state, $field, $instance, $langcod
     '#maxlength' => 10,
     '#required' => FALSE,
     '#description' => t('In % or px'),
-    '#default_value' => variable_get('gmp_width')
+    '#default_value' => isset($items[$delta]['gmp_width']) ? $items[$delta]['gmp_width'] : variable_get('gmp_width')
   );
   $widget['gmp_height'] = array(
     '#type' => 'textfield',
@@ -202,20 +202,20 @@ function gmp_field_widget_form(&$form, &$form_state, $field, $instance, $langcod
     '#maxlength' => 10,
     '#required' => FALSE,
     '#description' => t('In % or px'),
-    '#default_value' => variable_get('gmp_height')
+    '#default_value' => isset($items[$delta]['gmp_height']) ? $items[$delta]['gmp_height'] : variable_get('gmp_height')
   );
   $widget['gmp_zoom'] = array(
     '#type' => 'select',
     '#title' => t('Zoom Area'),
     '#description' => t('Accepted values range from 0 (the whole world) to 21 (individual buildings).'),
-    '#default_value' => variable_get('gmp_zoom'),
+    '#default_value' => isset($items[$delta]['gmp_zoom']) ? $items[$delta]['gmp_zoom'] : variable_get('gmp_zoom'),
     '#options' => _gmp_zoom()
   );
   $widget['gmp_frameborder'] = array(
     '#type' => 'checkbox',
     '#title' => t('Frameborder'),
     '#description' => t('Show a frameborder.'),
-    '#default_value' => variable_get('gmp_frameborder'),
+    '#default_value' => isset($items[$delta]['gmp_frameborder']) ? $items[$delta]['gmp_frameborder'] : 0
   );
 
   return $widget;
