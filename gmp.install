@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * Implements hook_field_schema().
+ */
+function gmp_field_schema($field) {
+  $columns = array(
+    'id' => array(
+      'type' => 'serial',
+      'unsigned' => TRUE,
+      'not null' => TRUE,
+      'description' => 'The primary identifier for a gmap field.',
+    ),
+    'gmp_location' => array(
+      'type' => 'varchar',
+      // Maximum URLs length.
+      'length' => 2048,
+      'not null' => FALSE,
+      'sortable' => TRUE,
+    ),
+    'gmp_width' => array(
+      'type' => 'varchar',
+      'length' => 64,
+      'not null' => FALSE,
+    ),
+    'gmp_height' => array(
+      'type' => 'varchar',
+      'length' => 64,
+      'not null' => FALSE,
+    ),
+    'gmp_zoom' => array(
+      'type' => 'varchar',
+      'length' => 64,
+      'not null' => FALSE,
+    ),
+  );
+
+  $indexes = array(
+    'id' => array('id'),
+  );
+
+  return array(
+    'columns' => $columns,
+    'indexes' => $indexes,
+  );
+}

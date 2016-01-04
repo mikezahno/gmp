@@ -3,5 +3,4 @@ name         = SF Gmap Block
 description  = Simple Gmap Block
 package      = Smartforce
 files[]      = inc/gmp.admin.inc
-files[]      = inc/gmp.formatter.inc
 configure    = admin/config/content/gmp

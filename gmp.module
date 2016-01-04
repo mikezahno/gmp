@@ -1,4 +1,12 @@
 <?php
+/**
+ * @file
+ * Code for the Feature Name feature.
+ */
+
+module_load_include('inc', 'gmp', 'inc/gmp.formatter.inc');
+
+
 
 /**
  * Implements hook_help().
