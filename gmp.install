@@ -18,6 +18,11 @@ function gmp_field_schema($field) {
       'not null' => FALSE,
       'sortable' => TRUE,
     ),
+    'gmp_frameborder' => array(
+      'type' => 'varchar',
+      'length' => 64,
+      'not null' => FALSE,
+    ),
     'gmp_width' => array(
       'type' => 'varchar',
       'length' => 64,

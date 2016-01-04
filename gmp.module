@@ -4,7 +4,8 @@
  * Code for the Feature Name feature.
  */
 
-module_load_include('inc', 'gmp', 'inc/gmp.formatter.inc');
+include_once 'inc/gmp.formatter.inc';
+// module_load_include('inc', 'gmp', 'inc/gmp.formatter.inc');
 
 
 
@@ -186,9 +187,11 @@ function gmp_theme() {
  * Calculate Google Maps Zoom Range.
  */
 function _gmp_zoom() {
+  $max = 22;
   $zoom = array();
-  for ($i=0; $i < 22; $i++) {
+  for ($i=0; $i < $max; $i++) {
     $zoom[$i] = $i;
   }
+  array_unshift($zoom, '');
   return $zoom;
 }
