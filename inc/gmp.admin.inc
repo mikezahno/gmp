@@ -18,11 +18,11 @@ function gmp_admin_settings_form() {
 
   $form['gmp_api_key'] = array(
     '#type' => 'textfield',
-    '#title' => t('Enter your API Key'),
+    '#title' => t('Google Maps API Key.'),
     '#size' => 60,
     '#maxlength' => 128,
     '#required' => TRUE,
-    '#description' => t('Input your API Key'),
+    '#description' => t('Enter your Google Maps API Key.'),
     '#default_value' => variable_get('gmp_api_key')
   );
 

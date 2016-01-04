@@ -16,8 +16,9 @@ function gmp_help($path, $arg) {
   switch ($path) {
     // Help for another path in the block module.
     case 'admin/config/content/gmp':
-      return '<p>' . t('See <a href="@gmap_api">Google Maps API</a>', array(
+      return '<p>' . t('See <a href="@gmap_api">Google Maps API</a> for more Information. You can create your own API Key on the <a href="@gmap_api_console">Google Console</a>.', array(
         '@gmap_api' => 'https://developers.google.com/maps/documentation/embed/guide#api_key',
+        '@gmap_api_console' => 'https://console.developers.google.com/'
       )) . '</p>';
   }
 }
@@ -27,8 +28,8 @@ function gmp_help($path, $arg) {
  */
 function gmp_menu() {
   $items['admin/config/content/gmp'] = array(
-    'title'            => 'gmp.module Settings',
-    'description'      => 'Configure Gmp.',
+    'title'            => 'Gmp',
+    'description'      => 'Configure default settings of gmp (Google Maps).',
     'page callback'    => 'drupal_get_form',
     'page arguments'   => array('gmp_admin_settings_form'),
     'access arguments' => array('access administration pages'),
