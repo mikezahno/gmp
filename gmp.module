@@ -1,0 +1,186 @@
+<?php
+
+/**
+ * Implements hook_help().
+ */
+function gmp_help($path, $arg) {
+  switch ($path) {
+    // Help for another path in the block module.
+    case 'admin/config/content/gmp':
+      return '<p>' . t('See <a href="@gmap_api">Google Maps API</a>', array(
+        '@gmap_api' => 'https://developers.google.com/maps/documentation/embed/guide#api_key',
+      )) . '</p>';
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function gmp_menu() {
+  $items['admin/config/content/gmp'] = array(
+    'title'            => 'gmp.module Settings',
+    'description'      => 'Configure Gmp.',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('gmp_admin_settings_form'),
+    'access arguments' => array('access administration pages'),
+    'file'             => 'inc/gmp.admin.inc',
+    'type'             => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_perm().
+ */
+function gmp_permission() {
+  return array(
+    'view gmapBlock' => array(
+      'title' => t('View Gmap Block'),
+      'description' => t('Access the Gmap Block'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function gmp_block_info() {
+  $blocks['gmp'] = array(
+    'info' => t('Gmap Block'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function gmp_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'gmp':
+      if (user_access('access content')) {
+        $block['subject'] = t('Gmap Block');
+        $block['content'] = gmp_content();
+      }
+    break;
+  }
+  return $block;
+}
+
+/**
+ * Implements hook_block_configure().
+ */
+function gmp_block_configure($delta = '') {
+  $form = array();
+
+  switch($delta) {
+    case 'gmp' :
+      // Text field form element
+      $form['gmp_location'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Location'),
+        '#size' => 60,
+        '#maxlength' => 128,
+        '#required' => TRUE,
+        '#description' => t('The location defines the place to highlight on the map. It accepts a location as either a place name, address, or place ID.'),
+        '#default_value' => variable_get('gmp_location')
+      );
+      $form['gmp_width'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Width'),
+        '#size' => 8,
+        '#maxlength' => 10,
+        '#required' => TRUE,
+        '#description' => t('In % or px'),
+        '#default_value' => variable_get('gmp_width')
+      );
+      $form['gmp_height'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Height'),
+        '#size' => 8,
+        '#maxlength' => 10,
+        '#required' => TRUE,
+        '#description' => t('In % or px'),
+        '#default_value' => variable_get('gmp_height')
+      );
+      $form['gmp_zoom'] = array(
+        '#type' => 'select',
+        '#title' => t('Zoom Area'),
+        '#description' => t('Accepted values range from 0 (the whole world) to 21 (individual buildings).'),
+        '#default_value' => variable_get('gmp_zoom'),
+        '#options' => _gmp_zoom()
+      );
+      break;
+  }
+  return $form;
+}
+
+/**
+ * Implements hook_block_save($delta = '', $edit = array().
+ */
+function gmp_block_save($delta = '', $edit = array()) {
+  switch($delta) {
+    case 'gmp' :
+      // Saving the WYSIWYG text
+      // dpm($edit);
+      variable_set('gmp_zoom', $edit['gmp_zoom']);
+      variable_set('gmp_location', $edit['gmp_location']);
+      variable_set('gmp_width', $edit['gmp_width']);
+      variable_set('gmp_height', $edit['gmp_height']);
+      break;
+  }
+}
+
+
+/**
+ * Generate Block Content.
+ */
+function gmp_content() {
+  $items = array(
+    'gmp_api_key' => array(
+      '#markup' => variable_get('gmp_api_key')
+    ),
+    'gmp_zoom' => array(
+      '#markup' => variable_get('gmp_zoom')
+    ),
+    'gmp_location' => array(
+      '#markup' => variable_get('gmp_location')
+    ),
+    'gmp_width' => array(
+      '#markup' => variable_get('gmp_width')
+    ),
+    'gmp_height' => array(
+      '#markup' => variable_get('gmp_height')
+    ),
+  );
+  return theme('gmp_content', array('items' => $items));
+}
+
+/**
+ * Implements hook_theme().
+ */
+function gmp_theme() {
+  $module_path = drupal_get_path('module', 'gmp');
+  // Custom template for that overrides the default block.tpl.php.
+  $themes['gmp_content'] = array(
+    'template' => 'block--gmp',
+    'original hook' => 'block',
+    'path' => $module_path . '/templates',
+    'variables' => array(
+      'items' => array()
+    ),
+  );
+  return $themes;
+}
+
+/**
+ * Calculate Google Maps Zoom Range.
+ */
+function _gmp_zoom() {
+  $zoom = array();
+  for ($i=0; $i < 22; $i++) {
+    $zoom[$i] = $i;
+  }
+  return $zoom;
+}
