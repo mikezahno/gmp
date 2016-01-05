@@ -12,10 +12,11 @@ function gmp_field_info() {
       'default_widget' => 'gmp',
       'default_formatter' => 'gmp',
       'settings' => array(
-        'gmp_location'    => variable_get('gmp_location'), // Default Values
-        'gmp_width'       => '100%',
-        'gmp_height'      => '450px',
-        'gmp_zoom'        => 14
+        // Default Values
+        'gmp_location'    => variable_get('gmp_location'),
+        'gmp_width'       => variable_get('gmp_width'),
+        'gmp_height'      => variable_get('gmp_height'),
+        'gmp_zoom'        => variable_get('gmp_zoom')
       ),
       'instance_settings' => array(),
     )
