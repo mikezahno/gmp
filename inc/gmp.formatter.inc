@@ -23,35 +23,43 @@ function gmp_field_info() {
   );
 }
 
-/**
- * Implements hook_field_validate().
- *
- * Possible error codes:
- * - 'email_invalid': The email address is not valid
- */
-function gmp_field_validate($obj_type, $object, $field, $instance, $langcode, $items, &$errors) {
-  // foreach ($items as $delta => $item) {
-  //   dpm($instance);
-  //   dpm($errors);
-  //   // if ($item['url'] != '' && !valid_email_address(trim($item['email']))) {
-  //   if ($item['url'] != '' && !valid_url(trim($item['url'], $absolute = FALSE))) {
-  //     $message = t('"%url" is not a valid URL', array('%url' => $item['url']));
-  //     $errors[$field['field_name']][$langcode][$delta][] = array(
-  //       'error' => "url",
-  //       'message' => $message,
-  //     );
-  //   }
+// /**
+//  * Implements hook_field_validate().
+//  *
+//  * Possible error codes:
+//  * - 'email_invalid': The email address is not valid
+//  */
+// function gmp_field_validate($obj_type, $object, $field, $instance, $langcode, $items, &$errors) {
+//   foreach ($items as $delta => $item) {
+//     dpm($instance);
+//     dpm($errors);
+//     // if ($item['url'] != '' && !valid_email_address(trim($item['email']))) {
+//     if ($item['gmp_location'] == '') {
+//       $message = t('Please enter a valid location.', array('%gmp_location' => $item['gmp_location']));
+//       $errors[$field['field_name']][$langcode][$delta][] = array(
+//         'error' => "gmp_location",
+//         'message' => $message,
+//       );
+//     }
 
-  //   if ($item['title'] != '') {
-  //     $message = t('"%title" is not a valid Title', array('%title' => $item['title']));
-  //     $errors[$field['field_name']][$langcode][$delta][] = array(
-  //       'error' => "title",
-  //       'message' => $message,
-  //     );
-  //   }
-  //   dpm($errors);
-  // }
-}
+//     if ($item['gmp_width'] == '') {
+//       $message = t('Please enter a valid width in px or %.', array('%gmp_width' => $item['gmp_width']));
+//       $errors[$field['field_name']][$langcode][$delta][] = array(
+//         'error' => "gmp_width",
+//         'message' => $message,
+//       );
+//     }
+
+//     if ($item['gmp_height'] == '') {
+//       $message = t('Please enter a valid height in px.', array('%gmp_height' => $item['gmp_height']));
+//       $errors[$field['field_name']][$langcode][$delta][] = array(
+//         'error' => "gmp_height",
+//         'message' => $message,
+//       );
+//     }
+//     dpm($errors);
+//   }
+// }
 
 /**
  * Implements hook_field_is_empty().
@@ -130,6 +138,7 @@ function gmp_field_widget_info() {
   );
 }
 
+
 /**
  * Implements hook_field_widget_form().
  *
@@ -157,7 +166,7 @@ function gmp_field_widget_form(&$form, &$form_state, $field, $instance, $langcod
     '#maxlength' => 128,
     '#required' => FALSE,
     '#description' => t('The location defines the place to highlight on the map. It accepts a location as either a place name, address, or place ID.'),
-    '#default_value' => isset($items[$delta]['gmp_location']) ? $items[$delta]['gmp_location'] : variable_get('gmp_location')
+    '#default_value' => isset($items[$delta]['gmp_location']) ? $items[$delta]['gmp_location'] : NULL
   );
   $widget['gmp_width'] = array(
     '#type' => 'textfield',
@@ -166,7 +175,7 @@ function gmp_field_widget_form(&$form, &$form_state, $field, $instance, $langcod
     '#maxlength' => 10,
     '#required' => FALSE,
     '#description' => t('In % or px'),
-    '#default_value' => isset($items[$delta]['gmp_width']) ? $items[$delta]['gmp_width'] : variable_get('gmp_width')
+    '#default_value' => isset($items[$delta]['gmp_width']) ? $items[$delta]['gmp_width'] : NULL
   );
   $widget['gmp_height'] = array(
     '#type' => 'textfield',
@@ -175,13 +184,13 @@ function gmp_field_widget_form(&$form, &$form_state, $field, $instance, $langcod
     '#maxlength' => 10,
     '#required' => FALSE,
     '#description' => t('In % or px'),
-    '#default_value' => isset($items[$delta]['gmp_height']) ? $items[$delta]['gmp_height'] : variable_get('gmp_height')
+    '#default_value' => isset($items[$delta]['gmp_height']) ? $items[$delta]['gmp_height'] : NULL
   );
   $widget['gmp_zoom'] = array(
     '#type' => 'select',
     '#title' => t('Zoom Area'),
     '#description' => t('Accepted values range from 0 (the whole world) to 21 (individual buildings).'),
-    '#default_value' => isset($items[$delta]['gmp_zoom']) ? $items[$delta]['gmp_zoom'] : variable_get('gmp_zoom'),
+    '#default_value' => isset($items[$delta]['gmp_zoom']) ? $items[$delta]['gmp_zoom'] : NULL,
     '#options' => _gmp_zoom()
   );
 
