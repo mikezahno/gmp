@@ -1,11 +1,5 @@
 # Simple Google Maps Module
-
-**In development!**
-
-Simple Google Maps Module. Adds a Block and a new Fieldformatter 
+Simple Google Maps Module. Adds a gmap block and a gmap field formatter.
 
 ### Info
-...
-
-### Todo
-* Field formatter not yet working...
+For more complex tasks and some open source power using Leaflet.js go to https://www.drupal.org/project/leaflet

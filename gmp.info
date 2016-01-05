@@ -1,6 +1,8 @@
+name         = Gmap
+description  = Google Maps field formatter and block
 core         = 7.x
-name         = SF Gmap Block
-description  = Simple Gmap Block
-package      = Smartforce
+version      = 7.x-0.1
+package      = Fields
 files[]      = inc/gmp.admin.inc
 configure    = admin/config/content/gmp
+

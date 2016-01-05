@@ -60,12 +60,6 @@ function gmp_admin_settings_form() {
     '#default_value' => variable_get('gmp_zoom'),
     '#options' => _gmp_zoom()
   );
-  $form['gmp']['gmp_frameborder'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Frameborder'),
-    '#description' => t('Show a frameborder.'),
-    '#default_value' => variable_get('gmp_frameborder')
-  );
 
   return system_settings_form($form);
 }

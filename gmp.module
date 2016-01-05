@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Code for the Feature Name feature.
+ * Gmap
  */
 
 include_once 'inc/gmp.formatter.inc';

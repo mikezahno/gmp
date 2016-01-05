@@ -1,31 +1,4 @@
 <?php
-/**
- *
- * Providing a field requires:
- * - Defining a field:
- *   - hook_field_info()
- *   - hook_field_schema()
- *   - hook_field_validate()
- *   - hook_field_is_empty()
- *
- * - Defining a formatter for the field (the portion that outputs the field for
- *   display):
- *   - hook_field_formatter_info()
- *   - hook_field_formatter_view()
- *
- * - Defining a widget for the edit form:
- *   - hook_field_widget_info()
- *   - hook_field_widget_form()
- *
- * url
- * button_text
- * button_icon
- *
- *
- *
- * @var string
- */
-
 
 /**
  * Implements hook_field_info().
@@ -40,7 +13,6 @@ function gmp_field_info() {
       'default_formatter' => 'gmp',
       'settings' => array(
         'gmp_location'    => variable_get('gmp_location'), // Default Values
-        'gmp_frameborder' => 0,
         'gmp_width'       => '100%',
         'gmp_height'      => '450px',
         'gmp_zoom'        => 14
@@ -133,7 +105,7 @@ function gmp_field_formatter_view($entity_type, $entity, $field, $instance, $lan
           <iframe
             width="' . $item['gmp_width'] . '"
             height="' . $item['gmp_height'] . '"
-            frameborder="' . $item['gmp_frameborder'] . '"
+            frameborder="0"
             style="border:0"
             src="https://www.google.com/maps/embed/v1/place?key=' . variable_get('gmp_api_key') . '&zoom=' . $item['gmp_zoom'] . '&q=' . $item['gmp_location'] . '" allowfullscreen>
           </iframe>' . $suffix
@@ -210,12 +182,6 @@ function gmp_field_widget_form(&$form, &$form_state, $field, $instance, $langcod
     '#description' => t('Accepted values range from 0 (the whole world) to 21 (individual buildings).'),
     '#default_value' => isset($items[$delta]['gmp_zoom']) ? $items[$delta]['gmp_zoom'] : variable_get('gmp_zoom'),
     '#options' => _gmp_zoom()
-  );
-  $widget['gmp_frameborder'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Frameborder'),
-    '#description' => t('Show a frameborder.'),
-    '#default_value' => isset($items[$delta]['gmp_frameborder']) ? $items[$delta]['gmp_frameborder'] : 0
   );
 
   return $widget;
